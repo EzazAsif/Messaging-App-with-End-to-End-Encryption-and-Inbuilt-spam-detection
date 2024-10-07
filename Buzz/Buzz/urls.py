@@ -20,6 +20,7 @@ from django.urls import path,include
 # The API URLs are now determined automatically by the router.
 urlpatterns = [
     path('', include('messenger.urls')),
+    
     path('admin/', admin.site.urls),
     path('accounts/', include('accounts.urls')), 
 ]
