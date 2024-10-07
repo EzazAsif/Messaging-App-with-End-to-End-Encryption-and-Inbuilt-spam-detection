@@ -1,3 +1,7 @@
-Message: {{message}}
+Message: <p style="font-weight: bold; font-size: 16;">{{message}} </p>
 <br>
-Spam? : {{pred}}
+{%if pred%}
+Spam? : <p style="color: red; font-weight: bold"> {{pred}} </p>
+{%else%}
+Spam? : <p style="color: green; font-weight: bold"> {{pred}} </p>
+{%endif %}
