@@ -28,6 +28,31 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+import os
+from decouple import config
+
+# Get the directory of the current script (settings.py)
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+
+# Construct the relative path to the .env file
+env_path = os.path.join(BASE_DIR, '.env')
+
+# You do not need to explicitly load the .env file; config() does that automatically.
+SOCIAL_AUTH_GOOGLE_OAUTH2_KEY = config('GOOGLE_OAUTH_CLIENT_ID')
+SOCIAL_AUTH_GOOGLE_OAUTH2_SECRET = config('GOOGLE_OAUTH_CLIENT_SECRET')
+
+
+
+
+# Add the site ID for Django sites framework (ensure it's 1 if it's the first and only site)
+SITE_ID = 1
+
+# URL configuration
+LOGIN_URL = 'login'
+LOGOUT_URL = 'logout_view'
+LOGIN_REDIRECT_URL = 'index'  # Where to redirect after successful login
+LOGOUT_REDIRECT_URL = 'index'
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,7 +64,14 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'messenger',
     'accounts',
+    'social_django',
 ]
+
+# Add the authentication backends
+AUTHENTICATION_BACKENDS = (
+    'social_core.backends.google.GoogleOAuth2',  # Google authentication backend
+    'django.contrib.auth.backends.ModelBackend',  # Default backend
+)
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -49,6 +81,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'social_django.middleware.SocialAuthExceptionMiddleware',  # Add this
 ]
 
 ROOT_URLCONF = 'Buzz.urls'
@@ -64,6 +97,8 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',  # Add this
+                'social_django.context_processors.login_redirect',  # Add this
             ],
         },
     },
@@ -78,7 +113,7 @@ WSGI_APPLICATION = 'Buzz.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
     }
 }
 
@@ -124,3 +159,4 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
