@@ -1,0 +1,101 @@
+        /* Custom styles for welcome page */
+        body {
+            background: linear-gradient(135deg, #f9e79f, #f1c40f); /* Smooth yellow gradient */
+            height: 100vh;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Arial', sans-serif;
+            color: #333;
+        }
+        /* Bumblebee stickers in background */
+        body::before {
+            content: "";
+            background-image: url('https://i.pinimg.com/564x/6a/87/4e/6a874eadc55e2406f96cf897d2618cd2.jpg'); /* Bumblebee image */
+            background-repeat: repeat;
+            background-size: 100px 100px; /* Size of each bee */
+            opacity: 0.3; /* Medium opacity */
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            z-index: -1; /* Behind everything */
+        }
+
+        /* Container for main content */
+        .container {
+            max-width: 900px;
+            text-align: center;
+            background: rgba(18, 17, 17, 0.85); /* Semi-transparent white background */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2); /* Shadow for depth */
+        }
+
+        h1 {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #e67e22; /* Warm orange */
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: white;
+        }
+
+        /* Carousel Styles */
+        .carousel-item img {
+            width: 70%;
+            height: 350px;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .carousel-caption {
+            background-color: rgba(0, 0, 0, 0.6); /* Dark overlay for readability */
+            padding: 20px;
+            border-radius: 10px;
+            font-size: 1.3rem;
+        }
+
+        /* Carousel buttons */
+        .carousel-control-prev, .carousel-control-next {
+            filter: brightness(0.8);
+        }
+
+        /* Buttons for login and sign up */
+        .feature-buttons {
+            margin-top: 40px;
+        }
+
+        .btn-custom {
+            background-color: #e67e22; /* Warm orange */
+            color: #fff;
+            border-radius: 20px;
+            font-size: 18px;
+            padding: 12px 30px;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-custom:hover {
+            background-color: #d35400; /* Slightly darker orange on hover */
+        }
+
+        .carousel-indicators [data-bs-target] {
+            background-color: #e67e22; /* Custom orange indicators */
+        }
+
+        /* Media queries for responsiveness */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+
+            .carousel-item img {
+                height: 300px;
+            }
+        }
+    

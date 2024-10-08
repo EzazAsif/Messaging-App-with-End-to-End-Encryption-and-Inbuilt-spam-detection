@@ -26,25 +26,28 @@ class SpamClassifier(nn.Module):
   
 
 def makepreds(text):
-   
-    model = SpamClassifier(5000)  
-
+    # Define device: CPU or GPU
+    device = torch.device("cuda" if torch.cuda.is_available() else "cpu")
     
-    model.load_state_dict(torch.load("../Spam Detector/spam_classifier_model.pth"))  
+    # Initialize model and move it to the correct device (CPU or GPU)
+    model = SpamClassifier(5000).to(device)
+    
+    # Load the model with map_location for CPU or GPU
+    model.load_state_dict(torch.load("../Spam Detector/spam_classifier_model.pth", map_location=device))
     model.eval()
 
-    
-    vectorizer = joblib.load("../Spam Detector/tfidf_vectorizer.pkl")  
+    # Load the vectorizer for text transformation
+    vectorizer = joblib.load("../Spam Detector/tfidf_vectorizer.pkl")
 
-    
+    # Transform the input text using the vectorizer
     vector = vectorizer.transform([text])
 
-  
-    input_tensor = torch.tensor(vector.toarray(), dtype=torch.float32)
+    # Convert the vector to a tensor and move it to the correct device
+    input_tensor = torch.tensor(vector.toarray(), dtype=torch.float32).to(device)
 
-    
+    # Get the model prediction (no gradient required for inference)
     with torch.no_grad():
         prediction = model(input_tensor)
 
-    
+    # Convert the prediction into a binary value (spam or not spam)
     return True if prediction.item() > 0.5 else False

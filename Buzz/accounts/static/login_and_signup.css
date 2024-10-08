@@ -1,0 +1,115 @@
+body {
+    background: linear-gradient(to bottom right, #f9e79f, #f1c40f); /* Yellowish gradient */
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0;
+    position: relative;
+}
+
+/* Bumblebee stickers in background */
+body::before {
+    content: "";
+    background-image: url('https://i.pinimg.com/564x/6a/87/4e/6a874eadc55e2406f96cf897d2618cd2.jpg'); /* Bumblebee image */
+    background-repeat: repeat;
+    background-size: 100px 100px; /* Size of each bee */
+    opacity: 0.3; /* Medium opacity */
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: -1; /* Behind everything */
+}
+
+/* Buzz text scattered */
+body::after {
+    content: "BUZZ BUZZ BUZZ BUZZ BUZZ BUZZ BUZZ BUZZ BUZZ BUZZ BUZZ";
+    color: rgba(0, 0, 0, 0.1); /* Medium opacity */
+    font-size: 4rem;
+    position: absolute;
+    top: 10%;
+    left: 20%;
+    transform: rotate(-30deg); /* Slight rotation for scattered effect */
+    white-space: pre; /* Keep the "BUZZ" together */
+    z-index: -1; /* Behind everything */
+}
+
+/* Additional scattered "BUZZ" text */
+@keyframes scatterBuzz {
+    0% { top: 0; left: 0; }
+    100% { top: 90%; left: 90%; }
+}
+
+.buzz-1 {
+    position: absolute;
+    top: 50%;
+    left: 10%;
+    color: rgba(0, 0, 0, 0.2); /* Medium opacity */
+    font-size: 3rem;
+    transform: rotate(15deg);
+}
+
+.buzz-2 {
+    position: absolute;
+    top: 30%;
+    left: 60%;
+    color: rgba(0, 0, 0, 0.2); /* Medium opacity */
+    font-size: 5rem;
+    transform: rotate(-45deg);
+}
+
+.buzz-3 {
+    position: absolute;
+    top: 80%;
+    left: 40%;
+    color: rgba(0, 0, 0, 0.2); /* Medium opacity */
+    font-size: 4rem;
+    transform: rotate(30deg);
+}
+
+.container {
+    margin-top: 0; /* Removed margin as body uses flexbox to center the content */
+}
+
+.card {
+    border-radius: 15px;
+    padding: 20px;
+    background-color: #ffffff; /* Keep the card background white for better contrast */
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.1); /* Add a slight shadow to elevate the card */
+}
+
+.nav-pills .nav-link.active {
+    background-color: #f1c40f; /* Yellow buttons */
+    color: #000;
+}
+
+.form-control {
+    border-radius: 10px;
+}
+
+/* Button Styles */
+.btn-primary {
+    background-color: #f1c40f; /* Yellow */
+    border: none;
+    color: #000; /* Black text */
+    border-radius: 10px;
+}
+
+.btn-primary:hover {
+    background-color: #e1b300; /* Slightly darker yellow on hover */
+    color: #000000;
+}
+
+.btn-success {
+    background-color: #000000; /* Black */
+    border: none;
+    color: #f1c40f; /* Yellow text */
+    border-radius: 10px;
+}
+
+.btn-success:hover {
+    background-color: #333333; /* Darker black on hover */
+    color: #f1c40f;
+}
