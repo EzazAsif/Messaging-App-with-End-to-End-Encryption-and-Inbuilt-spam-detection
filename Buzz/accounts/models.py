@@ -15,7 +15,6 @@ class User(AbstractUser):
         related_name='custom_user_permissions_set',  # Change related_name to something unique
         blank=True
     )
-    profileid = models.IntegerField()
     picture = models.FileField( default='defaultpp.jpg',upload_to='profilepictures/')
 
     def __str__(self):
