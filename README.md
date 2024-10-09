@@ -26,19 +26,19 @@ This is a secure messaging application built using Django. The app provides **en
 Buzz
 │
 ├── messenger/                              
-│   ├── migrations/                    
-│   ├── models.py
-|   ├── spam_classifier.py
+|   ├── migrations/                    
+|   ├── models.py
+|   |── spam_classifier.py
 |   |──encrypt.py                        
-│   ├── views.py                        
-│   ├── urls.py                        
-│   ├── forms.py                        
-│   └── templates/                      
-│ 
-|── accounts/                            
-│   ├── migrations/                     
-│   ├── models.py                       
-│   ├── views.py                       
+|   ├── views.py                        
+|   ├── urls.py                        
+|   ├── forms.py                        
+|   └── templates/                      
+| 
+||── accounts/                            
+|   ├── migrations/                     
+|   ├── models.py                       
+|   ├── views.py                       
 │   ├── urls.py                        
 │   ├── forms.py                        
 │   └── templates/
