@@ -23,21 +23,25 @@ This is a secure messaging application built using Django. The app provides **en
 ## Project Structure
 
 ```bash
-Messaging-App-with-End-to-End-Encryption-and-Inbuilt-spam-detection/
+Buzz
 │
-├── Buzz/                               # Main Django app
-│   ├── migrations/                     # Database migrations
-│   ├── models.py                       # Defines the database models (Message, User, etc.)
-│   ├── views.py                        # Handles user requests (sending/receiving messages)
-│   ├── urls.py                         # URL routing for the app
-│   ├── forms.py                        # User forms for login/register
-│   └── templates/                      # HTML templates
-│
-├── encryption/                         # Folder containing encryption utilities
-│   ├── encrypt.py                      # Handles message encryption and decryption
-│
-├── spam_detection/                     # Folder containing spam detection model
-│   ├── spam_classifier.py              # Spam detection model and prediction logic
-│
-├── requirements.txt                    # Python dependencies for the project
-└── README.md                           # Project documentation
+├── messenger/                              
+│   ├── migrations/                    
+│   ├── models.py
+|   ├── spam_classifier.py
+|   |──encrypt.py                        
+│   ├── views.py                        
+│   ├── urls.py                        
+│   ├── forms.py                        
+│   └── templates/                      
+│ 
+|── accounts/                            
+│   ├── migrations/                     
+│   ├── models.py                       
+│   ├── views.py                       
+│   ├── urls.py                        
+│   ├── forms.py                        
+│   └── templates/
+|
+├── requirements.txt                   
+└── README.md                          
