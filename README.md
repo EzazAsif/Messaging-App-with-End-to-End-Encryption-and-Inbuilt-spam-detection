@@ -25,23 +25,23 @@ This is a secure messaging application built using Django. The app provides **en
 ```bash
 Buzz
 │
-├── messenger/                              
-|   ├── migrations/                    
-|   ├── models.py
-|   |── spam_classifier.py
-|   |──encrypt.py                        
-|   ├── views.py                        
-|   ├── urls.py                        
-|   ├── forms.py                        
-|   └── templates/                      
+├──messenger/                              
+|  ├── migrations/                    
+|  ├── models.py
+|  |── spam_classifier.py
+|  |──encrypt.py                        
+|  ├── views.py                        
+|  ├── urls.py                        
+|  ├── forms.py                        
+|  └── templates/                      
 | 
-||── accounts/                            
-|   ├── migrations/                     
-|   ├── models.py                       
-|   ├── views.py                       
-│   ├── urls.py                        
-│   ├── forms.py                        
-│   └── templates/
+|──accounts/                            
+|  ├── migrations/                     
+|  ├── models.py                       
+|  ├── views.py                       
+│  ├── urls.py                        
+│  ├── forms.py                        
+│  └── templates/
 |
 ├── requirements.txt                   
 └── README.md                          
