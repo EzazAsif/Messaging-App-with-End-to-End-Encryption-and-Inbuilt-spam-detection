@@ -1,7 +1,7 @@
 // Load public key from Django (fetch from backend)
 function arrayBufferToBase64(buffer) {
-    const binary = String.fromCharCode(...new Uint8Array(buffer));
-    return btoa(binary);
+    const binaryString = String.fromCharCode(...new Uint8Array(buffer));
+    return window.btoa(binaryString);
 }
 
 function base64ToArrayBuffer(base64) {
@@ -16,33 +16,19 @@ function base64ToArrayBuffer(base64) {
 // Load the public key for RSA encryption
 async function loadPublicKey() {
     try {
-        const response = await fetch('/get-public-key/', {
-            method: 'GET',
-            credentials: 'include',
-        });
-
-        if (response.ok) {
-            const publicKeyBase64 = await response.text();
-            const publicKeyBuffer = base64ToArrayBuffer(publicKeyBase64);
-
-            return await window.crypto.subtle.importKey(
-                "spki",
-                publicKeyBuffer,
-                {
-                    name: "RSA-OAEP",
-                    hash: { name: "SHA-256" },
-                },
-                false,
-                ["encrypt"]
-            );
-        } else {
-            throw new Error("Failed to load public key");
+        const response = await fetch('/get-public-key/'); // Adjust the URL to match your Django routing
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
         }
+        const publicKeyBase64 = await response.text(); // Get the public key as a string
+        // Process the public key (e.g., convert to CryptoKey)
+        return publicKeyBase64;
     } catch (error) {
-        console.error("Error loading public key:", error);
-        throw error; // rethrow to handle in the main function
+        console.error('Error loading public key:', error);
     }
 }
+
+
 
 // AES encryption with RSA key wrapping
 async function encryptMessage(message) {
@@ -72,7 +58,7 @@ async function encryptMessage(message) {
         );
 
         // Step 3: Encrypt the AES key using RSA
-        const publicKey = await loadPublicKey();
+        const publicKey = await loadPublicKey(); // Ensure this returns a valid CryptoKey
         const aesKeyBuffer = await window.crypto.subtle.exportKey("raw", aesKey);
         const encryptedAesKey = await window.crypto.subtle.encrypt(
             {
@@ -90,7 +76,7 @@ async function encryptMessage(message) {
         };
     } catch (error) {
         console.error("Encryption error:", error);
-        throw error; // rethrow to handle in the calling function
+        throw error; // Rethrow to handle in the calling function
     }
 }
 
