@@ -9,8 +9,7 @@ class Messages(models.Model):
     message = models.CharField(max_length=200)
     time_sent = models.DateTimeField(auto_now_add=True)
     attachment = models.FileField(null=True, blank=True)
+    spam = models.BooleanField(default=False)  
 
     def __str__(self):
         return f"From {self.sender} to {self.receiver}: {self.message[:20]}"
-
-

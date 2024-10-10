@@ -34,26 +34,43 @@ Message: <p style="font-weight: bold; font-size: 16px;" id="message">{{ message 
 
 <script>
     
-   
-    
-    // Fetch the message to be encrypted
-    const message = document.getElementById("message").innerText;
+     
 
     // Async function to handle encryption and decryption
-    async function processEncryption() {
+    async function processEncryption(m) {
         
-            // Encrypt the message
-            const encryptedMessage = await encryptMessage(message);
-            document.getElementById("enc").innerText = encryptedMessage;
+        const publicKeyBase64 = await fetchPublicKey();
+        const privateKeyBase64 = await fetchPrivateKey();
 
-            // Decrypt the message
-            const decryptedMessage = await decryptMessage(encryptedMessage);
-            document.getElementById("dec").innerText = decryptedMessage;
+        const publicKey = await importPublicKey(publicKeyBase64);
+        const privateKey = await importPrivateKey(privateKeyBase64);
+
+        // Generate an AES key
+        const aesKey = await generateAESKey();
+
+        // Encrypt a message using AES
+       
+        const encryptedData = await aesEncrypt(m, aesKey);
+        
+        // Encrypt the AES key with the RSA public key
+        const encryptedAESKey = await encryptAESKey(aesKey, publicKey);
+
+        console.log("Encrypted AES Key:", encryptedAESKey);
+        console.log("Encrypted Data:", encryptedData);
+
+        // Decrypt the AES key using RSA private key
+        const decryptedAESKey = await decryptAESKey(encryptedAESKey, privateKey);
+
+        // Decrypt the message using the decrypted AES key
+        const decryptedMessage = await aesDecrypt(encryptedData.ciphertext, decryptedAESKey, encryptedData.iv);
+
+        console.log("Decrypted Message:", decryptedMessage);
+        
         
     }
 
     // Run the encryption process after the page loads
-    window.onload = processEncryption;
+    window.onload = processEncryption(document.getElementById("message").innerText).catch(console.error("failed"));
     
 </script>
 
