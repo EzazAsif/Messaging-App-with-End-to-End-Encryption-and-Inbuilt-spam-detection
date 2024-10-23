@@ -19,7 +19,7 @@ Message: <p style="font-weight: bold; font-size: 16px;" id="message">{{ message 
 <p style="font-weight: bold; font-size: 16px;" id="enc">Encrypted message using JS: <span id="jsEncryptedMessage"></span></p> 
 <p style="font-weight: bold; font-size: 16px;" id="dec">Decrypted message using JS: <span id="jsDecryptedMessage"></span></p> 
 
-<form method="POST" action="{% url "index" %}">
+<form method="POST" action="{% url 'test' %}">
     {% csrf_token %}
     <input name="message" type="text" required>
     <button type="submit" class="btn btn-success">Submit</button>

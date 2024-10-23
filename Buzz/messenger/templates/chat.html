@@ -1,0 +1,187 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chat Interface</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'chat_css.css' %}">
+
+</head>
+<body>
+
+    <!-- Profile Update Modal -->
+    <div class="modal fade" id="profileModal" tabindex="-1" role="dialog" aria-labelledby="profileModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="profileModalLabel">Update Profile</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body" style="background-color: #fdf5e6;"> <!-- Light yellowish background -->
+                    <!-- Profile Form -->
+                    <form id="profileForm">
+                        <!-- Change Profile Photo -->
+                        <div class="form-group text-center">
+                          <!-- Profile Image -->
+                          <img id="profileImage" src="/static/images/Screenshot 2024-10-21 235706.png" alt="Your Profile" class="rounded-circle mb-3" width="100" height="100"><br>
+                          
+                          <!-- Hidden File Input -->
+                          <input type="file" class="form-control-file mt-3" id="profilePhotoInput" accept="image/*" style="display: none;">
+                          
+                          <!-- Update Button (dark color) -->
+                          <button type="button" class="btn btn-dark mt-2" id="updateProfilePicBtn">Update Profile Picture</button>
+                        </div>
+                        <div class="form-group">
+                            <label for="username">Username</label>
+                            <input type="text" class="form-control" id="username" value="Your Name">
+                        </div>
+                        <div class="form-group">
+                            <label for="email">Gmail</label>
+                            <input type="email" class="form-control" id="email" value="youremail@gmail.com">
+                        </div>
+                        <div class="form-group">
+                            <label for="dob">Date of Birth</label>
+                            <input type="date" class="form-control" id="dob">
+                        </div>
+                        <div class="form-group">
+                            <label for="password">Change Password</label>
+                            <input type="password" class="form-control" id="password" placeholder="Enter new password">
+                        </div>
+                        <div class="form-group">
+                            <label for="privacy">Privacy</label>
+                            <select class="form-control" id="privacy">
+                                <option>Public</option>
+                                <option>Private</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="notifications">Notifications</label>
+                            <select class="form-control" id="notifications">
+                                <option>Enabled</option>
+                                <option>Disabled</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="mediaFiles">Media Files</label>
+                            <input type="file" class="form-control-file" id="mediaFiles" multiple>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary" onclick="saveProfileChanges()">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container-fluid h-100">
+        <div class="row h-100">
+            <!-- Sidebar Chat List -->
+            <div class="col-md-3 p-0">
+                <div class="sidebar">
+                    <!-- Clickable Profile Picture that opens modal -->
+                    <div class="profile" data-toggle="modal" data-target="#profileModal" style="cursor:pointer;">
+                      <img id="sidebarProfileImage" src="/static/images/Screenshot 2024-10-21 235706.png" alt="Your Profile">
+                      <h2 id="sidebarUsername">Your Name</h2> <!-- Added an ID to the name for easy access -->
+                   </div>
+
+                    <!-- Search bar to filter chat items -->
+                    <div class="search-bar">
+                        <input type="text" class="form-control search-input" placeholder="Search users..." id="searchInput" onkeyup="searchUsers()">
+                    </div>
+
+                    <div class="chat-list" id="chatList">
+                        <!-- Chat Items -->
+                        <div class="chat-item" onclick="selectUser('User 1', '/static/images/Screenshot2024-10-21235758.png ')">
+                            <img src="/static/images/Screenshot2024-10-21235758.png" alt="User 1">
+                            <div class="chat-info">
+                                <h4>User 1</h4>
+                                <p>Last message here...</p>
+                            </div>
+                            <span class="timestamp">09:00</span>
+                        </div>
+                        
+                        
+                        <div class="chat-item" onclick="selectUser('User 2', '/static/images/Screenshot 2024-10-21 235836.png')">
+                            <img src="/static/images/Screenshot 2024-10-21 235836.png" alt="User2">
+                            <div class="chat-info">
+                                <h4>User 2</h4>
+                                <p>Hey! What's up?</p>
+                            </div>
+                            <span class="timestamp">09:10</span>
+                        </div>
+
+                        <div class="chat-item" onclick="selectUser('User 3', '/static/images/Screenshot 2024-10-22 000105.png')">
+                            <img src="/static/images/Screenshot 2024-10-22 000105.png" alt="User3">
+                            <div class="chat-info">
+                                <h4>User 3</h4>
+                                <p>Good morning!</p>
+                            </div>
+                            <span class="timestamp">09:15</span>
+                        </div>
+
+                        <div class="chat-item" onclick="selectUser('User 4', '/static/images/Screenshot 2024-10-22 000157.png')">
+                            <img src="/static/images/Screenshot 2024-10-22 000157.png" alt="User4">
+                            <div class="chat-info">
+                                <h4>User 4</h4>
+                                <p>See you soon!</p>
+                            </div>
+                            <span class="timestamp">09:20</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Main Chat Window -->
+            <div class="col-md-9 p-0">
+                <div class="chat-window">
+                    <div class="chat-header">
+                        <img id="chatHeaderImage" src="/static/images/Screenshot2024-10-21235758.png" alt="User 1">
+                        <h3 id="chatHeaderName">User 1</h3>
+                    </div>
+
+                    <div class="chat-messages" id="chatMessages">
+                        <!-- Example message bubbles -->
+                        <div class="message received">
+                            <p>Hello! How are you?</p>
+                            <span class="time">09:05</span>
+                        </div>
+                        <div class="message sent">
+                            <p>I'm good! How about you?</p>
+                            <span class="time">09:06</span>
+                        </div>
+                    </div>
+
+                    <!-- Chat Input Area -->
+                    <div class="chat-input d-flex">
+                        <button class="emoji-btn btn btn-light">😊</button>
+                        <input type="text" class="form-control" placeholder="Type a message" id="messageInput">
+                        <button class="attach-btn btn btn-light" id="attachBtn">📎</button>
+                        <!-- Hidden File Input -->
+                        <input type="file" id="fileInput" style="display: none;">
+                        <button class="voice-btn btn btn-light">🎤</button>
+                        <!-- Send button with paper plane icon -->
+                        <button class="btn btn-primary send-btn" onclick="sendMessage()">
+                            <img src="/static/images/Yellow paper plane 3d isometric icon.jpeg" alt="Send Icon" class="send-icon">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS and Popper.js -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="{% static "chat_js.js" %}"></script>
+</body>
+</html>
+
+

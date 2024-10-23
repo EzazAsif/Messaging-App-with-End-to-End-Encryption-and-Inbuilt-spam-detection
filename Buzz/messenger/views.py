@@ -5,7 +5,7 @@ from .spamdetector import *
 from .encryptor import encrypt_message,decrypt_message
 # Create your views here.
 @login_required
-def index(request):
+def test(request):
     message="Hello I am Rafid"
     if request.method=="POST":
         data=request.POST
@@ -16,3 +16,6 @@ def index(request):
     encrypted_message=encrypt_message(message)
     decrypted_message=decrypt_message(encrypted_message)
     return render(request, 'index.html',{'pred':pred,'message':message,'encrypted_message':encrypted_message['encrypted_aes_key'],'decrypted_message':decrypted_message})
+@login_required
+def chat(request):
+    return render(request,"chat.html")
