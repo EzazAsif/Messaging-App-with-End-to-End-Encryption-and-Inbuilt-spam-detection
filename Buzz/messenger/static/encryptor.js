@@ -1,122 +1,117 @@
-// Function to fetch RSA public key
-async function fetchPublicKey() {
-    const response = await fetch('/get-public-key/');
-    if (!response.ok) throw new Error('Error fetching public key');
-    const publicKeyBase64 = await response.text();
-    return publicKeyBase64;
+// Fetch Public Key from Django API
+async function fetchPublicKey(userId) {
+    const response = await fetch(`/get-public-key/${userId}`);
+    const publicKeyPem = await response.text();
+    return publicKeyPem;
 }
 
-// Function to fetch RSA private key
-async function fetchPrivateKey() {
-    const response = await fetch('/get-private-key/');
-    if (!response.ok) throw new Error('Error fetching private key');
-    const privateKeyBase64 = await response.text();
-    return privateKeyBase64;
+// Fetch Private Key from Django API
+async function fetchPrivateKey(userId) {
+    const response = await fetch(`/get-private-key/${userId}`);
+    const privateKeyPem = await response.text();
+    return privateKeyPem;
 }
 
-// Function to import RSA public key
-async function importPublicKey(publicKeyBase64) {
-    const publicKey = await window.crypto.subtle.importKey(
-        'spki', 
-        Uint8Array.from(atob(publicKeyBase64), c => c.charCodeAt(0)), 
+// Convert PEM Public Key to CryptoKey Object
+async function importPublicKey(pemKey) {
+    const keyData = pemKey
+        .replace(/-----BEGIN PUBLIC KEY-----/, '')
+        .replace(/-----END PUBLIC KEY-----/, '')
+        .replace(/\n/g, '');
+    const binaryKeyData = atob(keyData);  // base64 decode
+    const keyBuffer = new Uint8Array(binaryKeyData.split('').map(char => char.charCodeAt(0)));
+
+    return crypto.subtle.importKey(
+        'spki',
+        keyBuffer.buffer,
         {
             name: 'RSA-OAEP',
-            hash: { name: 'SHA-256' }
-        }, 
-        false, 
+            hash: { name: 'SHA-256' },
+        },
+        true,
         ['encrypt']
     );
-    return publicKey;
 }
 
-// Function to import RSA private key
-async function importPrivateKey(privateKeyBase64) {
-    const privateKey = await window.crypto.subtle.importKey(
-        'pkcs8', 
-        Uint8Array.from(atob(privateKeyBase64), c => c.charCodeAt(0)), 
+// Convert PEM Private Key to CryptoKey Object
+async function importPrivateKey(pemKey) {
+    const keyData = pemKey
+        .replace(/-----BEGIN PRIVATE KEY-----/, '')
+        .replace(/-----END PRIVATE KEY-----/, '')
+        .replace(/\n/g, '');
+    const binaryKeyData = atob(keyData);  // base64 decode
+    const keyBuffer = new Uint8Array(binaryKeyData.split('').map(char => char.charCodeAt(0)));
+
+    return crypto.subtle.importKey(
+        'pkcs8',
+        keyBuffer.buffer,
         {
             name: 'RSA-OAEP',
-            hash: { name: 'SHA-256' }
-        }, 
-        false, 
+            hash: { name: 'SHA-256' },
+        },
+        true,
         ['decrypt']
     );
-    return privateKey;
 }
 
-// Function to generate AES key
-async function generateAESKey() {
-    return window.crypto.subtle.generateKey(
+// Encrypt AES Key with RSA Public Key
+async function encryptAesKeyWithPublicKey(aesKey, userId) {
+    const publicKeyPem = await fetchPublicKey(userId);
+    const publicKey = await importPublicKey(publicKeyPem);
+
+    return crypto.subtle.encrypt(
         {
-            name: 'AES-GCM',
-            length: 128 // AES-128
+            name: 'RSA-OAEP',
         },
-        true, 
-        ['encrypt', 'decrypt']
+        publicKey,
+        aesKey
     );
 }
 
-// Function to encrypt a message with AES
+// Decrypt AES Key with RSA Private Key
+async function decryptAesKeyWithPrivateKey(encryptedAesKey, userId) {
+    const privateKeyPem = await fetchPrivateKey(userId);
+    const privateKey = await importPrivateKey(privateKeyPem);
+
+    return crypto.subtle.decrypt(
+        {
+            name: 'RSA-OAEP',
+        },
+        privateKey,
+        encryptedAesKey
+    );
+}
+
+// AES Encryption Function (Example - needs implementation)
 async function aesEncrypt(message, aesKey) {
-    const iv = window.crypto.getRandomValues(new Uint8Array(12)); // Initialization vector
-    const encoder = new TextEncoder();
-    const ciphertext = await window.crypto.subtle.encrypt(
+    const iv = crypto.getRandomValues(new Uint8Array(12)); // Generate a random IV for AES GCM
+    const encodedMessage = new TextEncoder().encode(message);
+
+    const encryptedData = await crypto.subtle.encrypt(
         {
             name: 'AES-GCM',
             iv: iv,
         },
         aesKey,
-        encoder.encode(message)
+        encodedMessage
     );
 
     return {
-        iv: Array.from(iv),
-        ciphertext: Array.from(new Uint8Array(ciphertext))
+        ciphertext: new Uint8Array(encryptedData),
+        iv: iv
     };
 }
 
-// Function to decrypt a message with AES
+// AES Decryption Function (Example - needs implementation)
 async function aesDecrypt(ciphertext, aesKey, iv) {
-    const decrypted = await window.crypto.subtle.decrypt(
+    const decryptedData = await crypto.subtle.decrypt(
         {
             name: 'AES-GCM',
-            iv: new Uint8Array(iv),
+            iv: iv,
         },
         aesKey,
-        new Uint8Array(ciphertext)
+        ciphertext
     );
-    return new TextDecoder().decode(decrypted);
-}
 
-// Function to encrypt AES key with RSA public key
-async function encryptAESKey(aesKey, publicKey) {
-    const exportedKey = await window.crypto.subtle.exportKey('raw', aesKey);
-    const encryptedKey = await window.crypto.subtle.encrypt(
-        {
-            name: 'RSA-OAEP'
-        },
-        publicKey,
-        exportedKey
-    );
-    return Array.from(new Uint8Array(encryptedKey));
-}
-
-// Function to decrypt AES key with RSA private key
-async function decryptAESKey(encryptedKey, privateKey) {
-    const decryptedKey = await window.crypto.subtle.decrypt(
-        {
-            name: 'RSA-OAEP'
-        },
-        privateKey,
-        new Uint8Array(encryptedKey)
-    );
-    return await window.crypto.subtle.importKey(
-        'raw', 
-        decryptedKey, 
-        {
-            name: 'AES-GCM'
-        },
-        true,
-        ['encrypt', 'decrypt']
-    );
+    return new TextDecoder().decode(decryptedData);
 }
