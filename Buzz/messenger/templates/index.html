@@ -40,40 +40,8 @@ Message: <p style="font-weight: bold; font-size: 16px;" id="message">{{ message 
 <script>
     
      
-    async function processEncryption(message, userId) {
-        try {
-            // Fetch Public Key from Django API
-            const publicKeyBase64 = await fetchPublicKey(userId);
-            // Fetch Private Key from Django API
-            const privateKeyBase64 = await fetchPrivateKey(userId);
     
-            // Import the public and private keys
-            const publicKey = await importPublicKey(publicKeyBase64);
-            const privateKey = await importPrivateKey(privateKeyBase64);
     
-            // Generate an AES key (128-bit)
-            const aesKey = crypto.getRandomValues(new Uint8Array(16)); // 128-bit AES key
-    
-            // Encrypt the message using AES
-            const encryptedData = await aesEncrypt(message, aesKey);
-    
-            // Encrypt the AES key with the RSA public key
-            const encryptedAESKey = await encryptAesKeyWithPublicKey(aesKey, userId);
-    
-            console.log("Encrypted AES Key:", encryptedAESKey);
-            console.log("Encrypted Data:", encryptedData);
-    
-            // Decrypt the AES key using the RSA private key
-            const decryptedAESKey = await decryptAesKeyWithPrivateKey(encryptedAESKey, userId);
-    
-            // Decrypt the message using the decrypted AES key
-            const decryptedMessage = await aesDecrypt(encryptedData.ciphertext, decryptedAESKey, encryptedData.iv);
-    
-            console.log("Decrypted Message:", decryptedMessage);
-        } catch (error) {
-            console.error("Encryption process failed:", error);
-        }
-    }
     // Run the encryption process after the page loads
 window.onload = async function() {
     const id = {{ request.user.id }}; // Make sure this is correctly rendered in your template
