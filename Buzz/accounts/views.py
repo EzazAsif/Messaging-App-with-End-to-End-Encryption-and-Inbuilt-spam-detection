@@ -4,6 +4,7 @@ from .logfuncs import *
 from django.contrib.auth import authenticate, login as auth_login,logout
 from django.contrib import messages
 from django.contrib.auth.hashers import make_password
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
 
@@ -52,6 +53,35 @@ def signup(request):
         
     return render(request,"signup.html")
 
+@login_required
+def edit_profile(request):
+    user=User.objects.get(id=request.user.id)
+    if request.method=="POST":
+        data=request.POST
+        Firstname=data.get('FirstName')
+        Lastname=data.get('LastName')
+        Email=data.get('email')
+        password=data.get('psw')
+        rpassword=data.get('psw-repeat')
+        picture = request.FILES.get('editpp')
+        if(password and rpassword ):
+            if( password==rpassword):
+                user.set_password(password)
+            else:
+                messages.error(request,"Passwords don't match")  
+        if Firstname:
+            user.first_name=Firstname
+        if Lastname:
+            user.last_name=Lastname
+        if Email:
+            user.email=Email
+        if picture:
+            user.picture=picture
+            user.save()
+            messages.success(request, "Changes Succesful")
+        return redirect('/')
+    
+    return render(request,"editprofile.html",context={'users':user})
 
 
 def logout_view(request):

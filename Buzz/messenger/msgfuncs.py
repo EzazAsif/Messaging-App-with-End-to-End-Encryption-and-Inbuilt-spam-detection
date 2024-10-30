@@ -10,11 +10,11 @@ def get_chat(request,id):
     return JsonResponse({'messages': messages_html,'id':id})
 
 
-def chat_user(id):
-    messages = Messages.objects.filter(receiver=uid)|Messages.objects.filter(sender=id)
-    id_array = [message.sender for message in messages] + [message.receiver for message in messages]
+def chat_user(user):
+    messages = Messages.objects.filter(receiver=user)|Messages.objects.filter(sender=user)
+    id_array = [message.sender.id for message in messages] + [message.receiver.id for message in messages]
     id_array = list(set(id_array))
-    if id in id_array:
-      id_array.remove(id)
+    if user.id in id_array:
+      id_array.remove(user.id)
     users = User.objects.filter(id__in=id_array)
     return(users)
