@@ -18,12 +18,12 @@ $(document).ready(function() {
                     var content = message.message || '';
                     if (message.attachment) {
                         if (allowedImageTypes.some(type => message.attachment.endsWith(type))) {
-                            content += `<a href="/media/${message.attachment}"><img src="/media/${message.attachment}" id="image"></a>`;
+                            content = `<a href="${message.attachment}"><img src="${message.attachment}" id="image"></a>`;
                         } else {
-                            content += `<a href="/media/${message.attachment}">${message.attachment}</a>`;
+                            content = `<a href="${message.attachment}">${message.attachment.split('/').pop()}</a>`;  // Display file name
                         }
                     }
-
+                    
                     var messageClass = !isReceiver ? "message-main-receiver" : "message-main-sender";
                     var spamClass = isSpam ? "spam" : "";
 
