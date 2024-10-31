@@ -164,26 +164,59 @@
                 </a>
               </div>
             </div>
-            {% for m in messages %} {% if m.sender.id == chatuser.id %}
-            <div class="row message-body">
-              <div class="col-sm-12 message-main-receiver">
+            {% for m in messages %}
+    {% if m.sender.id == chatuser.id %}
+        <div class="row message-body {% if m.spam %}spam{% else %}{{ "" }}{% endif %}">
+            <div class="col-sm-12 message-main-receiver">
                 <div class="receiver">
-                  <div class="message-text">{{ m.message }}</div>
-                  <span class="message-time pull-right"> {{m.time_sent}} </span>
+                    {% if m.attachment %}
+                        <div id="mid{{ m.id }}" class="message-text">
+                            {% if m.attachment.url|slice:"-4:" == ".jpg" or m.attachment.url|slice:"-4:" == ".jpeg" or m.attachment.url|slice:"-4:" == ".png" or m.attachment.url|slice:"-4:" == ".gif" %}
+                                <a href="{{ m.attachment.url }}">
+                                    <img src="{{ m.attachment.url }}" id="image{{ m.id }}" alt="Attachment for message {{ m.id }}" style="max-width: 200px; height: auto;">
+                                </a>
+                            {% elif m.attachment.url|slice:"-5:" == ".html" or m.attachment.url|slice:"-4:" == ".pdf" %}
+                                <a href="{{ m.attachment.url }}" target="_blank">{{ m.attachment.url }}</a>
+                            {% else %}
+                                <a href="{{ m.attachment.url }}" target="_blank">{{ m.attachment.url }}</a>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div id="mid{{ m.id }}" class="message-text">{{ m.message }}</div>
+                    {% endif %}
+                    <span class="message-time pull-right">{{ m.time_sent }}</span>
                 </div>
-              </div>
             </div>
-            {% else %}
-            <div class="row message-body">
-              <div class="col-sm-12 message-main-sender">
+        </div>
+    {% else %}
+        <div class="row message-body {% if m.spam %}spam{% else %}{{ "" }}{% endif %}">
+            <div class="col-sm-12 message-main-sender">
                 <div class="sender">
-                  <div class="message-text">{{ m.message }}</div>
-                  <span class="message-time pull-right"> {{m.time_sent}} </span>
+                    {% if m.attachment %}
+                        <div id="mid{{ m.id }}" class="message-text">
+                            {% if m.attachment.url|slice:"-4:" == ".jpg" or m.attachment.url|slice:"-4:" == ".jpeg" or m.attachment.url|slice:"-4:" == ".png" or m.attachment.url|slice:"-4:" == ".gif" %}
+                                <a href="{{ m.attachment.url }}">
+                                    <img src="{{ m.attachment.url }}" id="image{{ m.id }}" alt="Attachment for message {{ m.id }}" style="max-width: 200px; height: auto;">
+                                </a>
+                            {% elif m.attachment.url|slice:"-5:" == ".html" or m.attachment.url|slice:"-4:" == ".pdf" %}
+                                <a href="{{ m.attachment.url }}" target="_blank">{{ m.attachment.url }}</a>
+                            {% else %}
+                                <a href="{{ m.attachment.url }}" target="_blank">{{ m.attachment.url }}</a>
+                            {% endif %}
+                        </div>
+                    {% else %}
+                        <div id="mid{{ m.id }}" class="message-text">{{ m.message }}</div>
+                    {% endif %}
+                    <span class="message-time pull-right">{{ m.time_sent }}</span>
                 </div>
-              </div>
             </div>
-            {% endif %} {% endfor %}
-          </div>
+        </div>
+    {% endif %}
+{% endfor %}
+
+        
+
+         </div>
           <div class="row reply">
             <div class="col-sm-1 col-xs-1 reply-emojis">
               <i class="fa fa-smile-o fa-2x"></i>
@@ -203,7 +236,7 @@
               </div>
               <div class="col-sm-1 col-xs-1 reply-recording">
                 <label for="fileInput">
-                  <i class="fa fa-paperclip fa-2x" aria-hidden="true" id="fileinputtt"></i>
+                  <i class="fa fa-paperclip fa-2x" aria-hidden="true"></i>
                 </label>
                 <input
                   type="file"
@@ -234,9 +267,26 @@
     <script src="{% static 'submitchat.js' %}"></script>
     <script src="{% static 'clickevents.js' %}"></script>
     <script>
-      var redirectUrl = "{% url 'login' %}";
-      var chatUrl = "{% url 'get_chat' chatuser.id %}";
+      function getMaxMessageId() {
+        // Get all elements that match the pattern
+        const messageElements = document.querySelectorAll('[id^="mid"]');
+        let maxId = -1; // Initialize maxId to a small number
+    
+        messageElements.forEach(element => {
+            // Extract the number from the id
+            const id = parseInt(element.id.replace('mid', ''), 10);
+            if (!isNaN(id) && id > maxId) {
+                maxId = id; // Update maxId if a larger number is found
+            }
+        });
+        console.log("{% url 'get_chat' chatuser.id %}?maxid="+maxId);
+        return "{% url 'get_chat' chatuser.id %}?maxid="+maxId;
+    }
+      
+      var redirectUrl = "{% url 'logout' %}";
+     
       var editprofileurl = "{% url 'editprofile'  %}";
+      
     </script>
     <script>
       document.addEventListener("DOMContentLoaded", function () {});

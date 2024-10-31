@@ -6,10 +6,18 @@ from django.contrib.auth.decorators import login_required
 
 @login_required
 def get_chat(request, id):
+    maxid = request.GET.get('maxid', None)
     messages = Messages.objects.filter(
         Q(sender=request.user, receiver_id=id) |
         Q(sender_id=id, receiver=request.user)
     ).order_by('time_sent')
+    # Convert maxid to an integer for comparison if it is provided
+    if maxid is not None:
+        try:
+            maxid = int(maxid)
+            messages = messages.filter(id__gt=maxid)  # Use __gt to filter ids greater than maxid
+        except ValueError:
+            maxid = None  # If conversion fails, set maxid to None
     messages_html = list(messages.values('id', 'sender', 'receiver', 'message', 'attachment', 'time_sent','spam'))
     
     return JsonResponse({
@@ -30,6 +38,7 @@ def chat_user(user):
 
 @login_required
 def get_chat1(request, id):
+    maxid = request.GET.get('maxid', None)
     messages = Messages.objects.filter(
         Q(sender=request.user, receiver_id=id) |
         Q(sender_id=id, receiver=request.user.id)

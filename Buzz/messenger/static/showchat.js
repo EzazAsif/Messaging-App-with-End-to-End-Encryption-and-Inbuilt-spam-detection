@@ -2,9 +2,9 @@ $(document).ready(function() {
     setInterval(function() {
         $.ajax({
             type: 'GET',
-            url: chatUrl,
+            url: getMaxMessageId(),
             success: function(response) {
-                $("#conversation").empty();
+                //$("#conversation").empty();
                 var allowedImageTypes = [".jpeg", ".jpg", ".png", ".gif", ".webp"];
                 var currentUserId = response.current_user_id;
 
@@ -30,13 +30,15 @@ $(document).ready(function() {
                     <div class="row message-body ${spamClass}">
                         <div class="col-sm-12 ${messageClass}">
                             <div class="${!isReceiver ? 'receiver' : 'sender'}">
-                                <div class="message-text">${content}</div>
+                                <div id="mid${message.id}" class="message-text">${content}</div>
                                 <span class="message-time pull-right">${message.time_sent}</span>
                             </div>
                         </div>
                     </div>`;
 
-                    $("#conversation").append(temp);
+                    $("#conversation").append(temp).children().last().fadeIn(15000);  // Fade in effect;
+                    $("conversation").scrollTop = conversation.scrollHeight;
+                    
                 }
 
                 $(".spam").click(function() {
@@ -47,5 +49,6 @@ $(document).ready(function() {
                 alert("Error");
             }
         });
+        
     }, 2000);
 });
