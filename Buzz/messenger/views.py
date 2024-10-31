@@ -42,6 +42,7 @@ def chat(request, id=None):
         if message or picture:
             if message:
                 Spam=makepreds(message)
+                #message=encrypt_message(message,request.user.id)
                 Messages.objects.create(sender=request.user, message=message, receiver=chatuser,spam=Spam)
             if picture:
                 Messages.objects.create(sender=request.user, attachment=picture, receiver=chatuser)

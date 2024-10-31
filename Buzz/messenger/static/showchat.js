@@ -27,9 +27,9 @@ $(document).ready(function() {
                     var spamClass = isSpam ? "spam" : "";
 
                     var temp = `
-                    <div class="row message-body ${spamClass}">
+                    <div class="row message-body ">
                         <div class="col-sm-12 ${messageClass}">
-                            <div class="${!isReceiver ? 'receiver' : 'sender'}">
+                            <div class="${!isReceiver ? 'receiver' : 'sender'} ${spamClass}">
                                 <div id="mid${message.id}" class="message-text">${content}</div>
                                 <span class="message-time pull-right">${message.time_sent}</span>
                             </div>

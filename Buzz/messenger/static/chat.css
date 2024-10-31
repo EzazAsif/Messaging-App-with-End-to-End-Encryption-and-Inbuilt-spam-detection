@@ -625,30 +625,33 @@ box-shadow: none;
 }
 
 .spam {
-    position: relative;
-    cursor: pointer;
+  position: relative;
+  cursor: pointer;
+  padding: 10px; /* Add padding to create space around the content */
 }
 
 .spam .message-text {
-    display: none;
+  display: none;
 }
 
 .spam::before {
-    content: "Spam";
-    display: inline-block;
-    background-color: #ff0000; /* Red background for spam label */
-    color: #ffffff;
-    padding: 2px 6px;
-    border-radius: 3px;
-    font-weight: bold;
-    margin-right: 10px;
+  content: "Spam";
+  position: absolute; /* Use absolute positioning */
+  top: 5px; /* Adjust to position the label */
+  left: 5px; /* Adjust to position the label */
+  background-color: #ff0000; /* Red background for spam label */
+  color: #ffffff;
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-weight: bold;
+  z-index: 1; /* Ensure it stays above other content */
 }
 
 /* When clicked, show message content and hide "Spam" label */
 .spam.spam-hidden .message-text {
-    display: block;
+  display: block;
 }
 
 .spam.spam-hidden::before {
-    content: ""; /* Hide the Spam label */
+  content: ""; /* Hide the Spam label */
 }

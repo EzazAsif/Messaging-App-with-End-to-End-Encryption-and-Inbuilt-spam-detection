@@ -166,8 +166,8 @@
             </div>
             {% for m in messages %}
     {% if m.sender.id == chatuser.id %}
-        <div class="row message-body {% if m.spam %}spam{% else %}{{ "" }}{% endif %}">
-            <div class="col-sm-12 message-main-receiver">
+        <div class="row message-body ">
+            <div class="col-sm-12 message-main-receiver {% if m.spam %}spam{% else %}{{ "" }}{% endif %}">
                 <div class="receiver">
                     {% if m.attachment %}
                         <div id="mid{{ m.id }}" class="message-text">
@@ -189,8 +189,8 @@
             </div>
         </div>
     {% else %}
-        <div class="row message-body {% if m.spam %}spam{% else %}{{ "" }}{% endif %}">
-            <div class="col-sm-12 message-main-sender">
+        <div class="row message-body ">
+            <div class="col-sm-12 message-main-sender {% if m.spam %}spam{% else %}{{ "" }}{% endif %}">
                 <div class="sender">
                     {% if m.attachment %}
                         <div id="mid{{ m.id }}" class="message-text">
