@@ -164,7 +164,7 @@
                 </a>
               </div>
             </div>
-            {% for m in messages %} {% if m.sender == chatuser.id %}
+            {% for m in messages %} {% if m.sender.id == chatuser.id %}
             <div class="row message-body">
               <div class="col-sm-12 message-main-receiver">
                 <div class="receiver">
@@ -229,7 +229,7 @@
     <script src="https://netdna.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
     <script type="text/javascript"></script>
 
-     <script src="{% static 'showchat.js' %}"></script> 
+    <script src="{% static 'showchat.js' %}"></script> 
 
     <script src="{% static 'submitchat.js' %}"></script>
     <script src="{% static 'clickevents.js' %}"></script>
