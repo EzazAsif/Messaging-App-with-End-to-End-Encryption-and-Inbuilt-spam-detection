@@ -10,9 +10,10 @@ $(document).ready(function() {
 
                 for (var key in response.messages) {
                     var message = response.messages[key];
+                    console.log(message.message)
                     var isReceiver = (message.sender === currentUserId);
                     var isSpam = message.spam;
-
+                    console.log(message.message)
                     // Check attachment type
                     var content = message.message || '';
                     if (message.attachment) {
