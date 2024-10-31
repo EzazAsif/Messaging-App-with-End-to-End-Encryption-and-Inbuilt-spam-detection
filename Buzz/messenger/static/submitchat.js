@@ -15,6 +15,8 @@ document.getElementById("attachmentForm").addEventListener("submit", function(ev
         throw new Error("Network response was not ok");
       }
       document.getElementById("comment").value = "";
+      document.getElementById("fileinputtt").value = "";
+      
       const scrollableDiv = document.getElementById("conversation");
       scrollableDiv.scrollTop = scrollableDiv.scrollHeight;
       

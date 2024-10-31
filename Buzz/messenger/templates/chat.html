@@ -71,7 +71,7 @@
                 <div class="row sideBar-body">
                   <div class="col-sm-3 col-xs-3 sideBar-avatar">
                     <div class="avatar-icon">
-                      <img src="{{i.picture}}" />
+                      <img src="{{i.picture.url}}" />
                     </div>
                   </div>
                   <div class="col-sm-9 col-xs-9 sideBar-main">
@@ -119,7 +119,7 @@
                 <div class="row sideBar-body">
                   <div class="col-sm-3 col-xs-3 sideBar-avatar">
                     <div class="avatar-icon">
-                      <img src="{{i.picture}}" />
+                      <img src="{{i.picture.url}}" />
                     </div>
                   </div>
 
@@ -143,7 +143,7 @@
           <div class="row heading">
             <div class="col-sm-2 col-md-1 col-xs-3 heading-avatar">
               <div class="heading-avatar-icon">
-                <img src="{{ chatuser.picture}}" />
+                <img src="{{ chatuser.picture.url}}" />
               </div>
             </div>
             <div class="col-sm-8 col-xs-7 heading-name">
@@ -203,7 +203,7 @@
               </div>
               <div class="col-sm-1 col-xs-1 reply-recording">
                 <label for="fileInput">
-                  <i class="fa fa-paperclip fa-2x" aria-hidden="true"></i>
+                  <i class="fa fa-paperclip fa-2x" aria-hidden="true" id="fileinputtt"></i>
                 </label>
                 <input
                   type="file"

@@ -10,7 +10,7 @@ def get_chat(request, id):
         Q(sender=request.user, receiver_id=id) |
         Q(sender_id=id, receiver=request.user)
     ).order_by('time_sent')
-    messages_html = list(messages.values('id', 'sender', 'receiver', 'message', 'attachment', 'time_sent'))
+    messages_html = list(messages.values('id', 'sender', 'receiver', 'message', 'attachment', 'time_sent','spam'))
     
     return JsonResponse({
         'messages': messages_html,
