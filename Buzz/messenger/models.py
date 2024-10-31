@@ -6,7 +6,7 @@ User = get_user_model()
 class Messages(models.Model):
     sender = models.ForeignKey(User, on_delete=models.CASCADE, related_name='sent_messages')
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
-    message = models.JSONField()
+    message = models.JSONField(default=dict)
     time_sent = models.DateTimeField(auto_now_add=True)
     attachment = models.FileField(null=True, blank=True)
     spam = models.BooleanField(default=False)  

@@ -29,7 +29,7 @@ def get_chat(request, id):
             'sender': message.sender.id,  # Use .id to get sender ID
             'receiver': message.receiver.id,  # Use .id to get receiver ID
             'message': message.message,  # This should now be a string after decryption
-            'attachment': message.attachment.url if message.attachment else None,
+            'attachment': message.attachment if message.attachment else None,
             'time_sent': message.time_sent.timestamp(),  # Convert to Unix timestamp
             'spam': message.spam,
         })
