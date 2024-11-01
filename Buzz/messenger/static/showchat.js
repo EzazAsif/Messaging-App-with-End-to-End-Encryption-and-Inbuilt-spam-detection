@@ -30,8 +30,15 @@ $(document).ready(function() {
                             content = `<a href="${message.attachment}">${message.attachment.split('/').pop()}</a>`;  // Display file name
                         }
                     }
+
                     // Convert the timestamp to a readable format
-                    var timestamp = new Date(message.time_sent * 1000).toLocaleString(); // Converts to milliseconds and formats it
+                    var date = new Date(message.time_sent * 1000);
+                    var optionsDate = { year: 'numeric', month: 'short', day: 'numeric' };
+                    var optionsTime = { hour: 'numeric', minute: 'numeric', hour12: true };
+                    var formattedDate = date.toLocaleDateString('en-US', optionsDate);
+                    var formattedTime = date.toLocaleTimeString('en-US', optionsTime);
+                    var timestamp = `${formattedDate}, ${formattedTime}`; // Combine date and time
+
                     console.log(timestamp);
                     var messageClass = !isReceiver ? "message-main-receiver" : "message-main-sender";
                     var spamClass = isSpam ? "spam" : "";
