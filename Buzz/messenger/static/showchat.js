@@ -20,9 +20,9 @@ $(document).ready(function() {
                         var attachmentType = message.attachment.split('.').pop();
 
                         if (allowedImageTypes.some(type => message.attachment.endsWith(type))) {
-                            content = `<a href="${message.attachment}"><img src="${message.attachment}" id="image"></a>`;
+                            content = `<a href="${message.attachment}"><img src="${message.attachment}" style="max-width: 200px; height: auto;" id="image"></a>`;
                         } else if (allowedVideoTypes.some(type => message.attachment.endsWith(type))) {
-                            content = `<video controls width="250">
+                            content = `<video controls style="max-width: 200px; height: auto;">
                                             <source src="${message.attachment}" type="video/${attachmentType}">
                                             Your browser does not support the video tag.
                                         </video>`;
