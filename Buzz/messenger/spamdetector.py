@@ -1,6 +1,7 @@
 import torch
 import torch.nn as nn
 import joblib  
+import os
 class SpamClassifier(nn.Module):
     def __init__(self, input_size):
         super(SpamClassifier, self).__init__()
@@ -31,13 +32,17 @@ def makepreds(text):
     
     # Initialize model and move it to the correct device (CPU or GPU)
     model = SpamClassifier(5000).to(device)
-    
-    # Load the model with map_location for CPU or GPU
-    model.load_state_dict(torch.load("../Spam Detector/spam_classifier_model.pth", map_location=device))
-    model.eval()
+    # Get the directory of the current script
+    script_dir = os.path.dirname(os.path.abspath(__file__))
 
+    # Full path to the model file
+    model_path = os.path.join(script_dir, "spam_classifier_model.pth")
+    # Load the model with map_location for CPU or GPU
+    model.load_state_dict(torch.load(model_path, map_location=device))
+    model.eval()
+    vectorizer_path = os.path.join(script_dir, "tfidf_vectorizer.pkl")
     # Load the vectorizer for text transformation
-    vectorizer = joblib.load("../Spam Detector/tfidf_vectorizer.pkl")
+    vectorizer = joblib.load(vectorizer_path)
 
     # Transform the input text using the vectorizer
     vector = vectorizer.transform([text])

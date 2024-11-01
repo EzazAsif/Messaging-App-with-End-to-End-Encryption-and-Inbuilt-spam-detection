@@ -50,8 +50,8 @@ SITE_ID = 1
 # URL configuration
 LOGIN_URL = 'login'
 LOGOUT_URL = 'logout_view'
-LOGIN_REDIRECT_URL = 'test'  # Where to redirect after successful login
-LOGOUT_REDIRECT_URL = 'test'
+LOGIN_REDIRECT_URL = 'chat'  # Where to redirect after successful login
+LOGOUT_REDIRECT_URL = 'login'
 
 # Application definition
 
