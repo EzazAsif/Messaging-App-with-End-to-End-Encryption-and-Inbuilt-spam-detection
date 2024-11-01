@@ -6,39 +6,48 @@ $(document).ready(function() {
             success: function(response) {
                 //$("#conversation").empty();
                 var allowedImageTypes = [".jpeg", ".jpg", ".png", ".gif", ".webp"];
+                var allowedVideoTypes = [".mp4", ".webm", ".ogg"];
                 var currentUserId = response.current_user_id;
 
                 for (var key in response.messages) {
                     var message = response.messages[key];
-                    console.log(message.message)
                     var isReceiver = (message.sender === currentUserId);
                     var isSpam = message.spam;
-                    console.log(message.message)
+
                     // Check attachment type
                     var content = message.message || '';
                     if (message.attachment) {
+                        var attachmentType = message.attachment.split('.').pop();
+
                         if (allowedImageTypes.some(type => message.attachment.endsWith(type))) {
                             content = `<a href="${message.attachment}"><img src="${message.attachment}" id="image"></a>`;
+                        } else if (allowedVideoTypes.some(type => message.attachment.endsWith(type))) {
+                            content = `<video controls width="250">
+                                            <source src="${message.attachment}" type="video/${attachmentType}">
+                                            Your browser does not support the video tag.
+                                        </video>`;
                         } else {
                             content = `<a href="${message.attachment}">${message.attachment.split('/').pop()}</a>`;  // Display file name
                         }
                     }
-                    
+                    // Convert the timestamp to a readable format
+                    var timestamp = new Date(message.time_sent * 1000).toLocaleString(); // Converts to milliseconds and formats it
+                    console.log(timestamp);
                     var messageClass = !isReceiver ? "message-main-receiver" : "message-main-sender";
                     var spamClass = isSpam ? "spam" : "";
 
                     var temp = `
-                    <div class="row message-body ">
+                    <div class="row message-body">
                         <div class="col-sm-12 ${messageClass}">
                             <div class="${!isReceiver ? 'receiver' : 'sender'} ${spamClass}">
                                 <div id="mid${message.id}" class="message-text">${content}</div>
-                                <span class="message-time pull-right">${message.time_sent}</span>
+                                <span class="message-time pull-right">${timestamp}</span>
                             </div>
                         </div>
                     </div>`;
 
                     $("#conversation").append(temp).children().last().fadeIn(15000);  // Fade in effect;
-                    $("conversation").scrollTop = conversation.scrollHeight;
+                    $("#conversation").scrollTop($("#conversation")[0].scrollHeight);  // Auto-scroll
                     
                 }
 

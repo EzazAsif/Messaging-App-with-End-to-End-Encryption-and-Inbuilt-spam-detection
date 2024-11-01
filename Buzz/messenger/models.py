@@ -8,7 +8,7 @@ class Messages(models.Model):
     receiver = models.ForeignKey(User, on_delete=models.CASCADE, related_name='received_messages')
     message = models.JSONField(default=dict)
     time_sent = models.DateTimeField(auto_now_add=True)
-    attachment = models.FileField(null=True, blank=True)
+    attachment = models.FileField(null=True, blank=True ,upload_to='attachments/')
     spam = models.BooleanField(default=False)  
 
     def __str__(self):

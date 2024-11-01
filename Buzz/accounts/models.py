@@ -19,7 +19,7 @@ class User(AbstractUser):
         related_name='custom_user_permissions_set',  # Change related_name to something unique
         blank=True
     )
-    picture = models.FileField(default='defaultpp.jpg', upload_to='profilepictures/')
+    picture = models.FileField(default='profilepictures/defaultpp.jpg', upload_to='profilepictures/')
     private_key = models.TextField(blank=True, null=True)
     public_key = models.TextField(blank=True, null=True)
 
