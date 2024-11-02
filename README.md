@@ -64,7 +64,6 @@ This is a secure messaging application built using Django. The app provides **en
 ª   ª   ª       
 ª   ª   +---__pycache__
 ª   ª           admin.cpython-312.pyc
-
 ª   ª           
 ª   +---Buzz
 ª   ª   ª   asgi.py
