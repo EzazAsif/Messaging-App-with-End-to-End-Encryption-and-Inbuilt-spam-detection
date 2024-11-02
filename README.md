@@ -51,11 +51,6 @@ This is a secure messaging application built using Django. The app provides **en
 ª   ª   ª   ª   __init__.py
 ª   ª   ª   ª   
 ª   ª   ª   +---__pycache__
-ª   ª   ª           0001_initial.cpython-312.pyc
-ª   ª   ª           0002_remove_user_profileid.cpython-312.pyc
-ª   ª   ª           0003_user_private_key_user_public_key.cpython-312.pyc
-ª   ª   ª           0004_alter_user_picture.cpython-312.pyc
-ª   ª   ª           __init__.cpython-312.pyc
 ª   ª   ª           
 ª   ª   +---static
 ª   ª   ª       login_and_signup.css
@@ -69,12 +64,7 @@ This is a secure messaging application built using Django. The app provides **en
 ª   ª   ª       
 ª   ª   +---__pycache__
 ª   ª           admin.cpython-312.pyc
-ª   ª           apps.cpython-312.pyc
-ª   ª           logfuncs.cpython-312.pyc
-ª   ª           models.cpython-312.pyc
-ª   ª           urls.cpython-312.pyc
-ª   ª           views.cpython-312.pyc
-ª   ª           __init__.cpython-312.pyc
+
 ª   ª           
 ª   +---Buzz
 ª   ª   ª   asgi.py
@@ -85,10 +75,6 @@ This is a secure messaging application built using Django. The app provides **en
 ª   ª   ª   
 ª   ª   +---__pycache__
 ª   ª           settings.cpython-312.pyc
-ª   ª           urls.cpython-312.pyc
-ª   ª           wsgi.cpython-312.pyc
-ª   ª           __init__.cpython-312.pyc
-ª   ª           
 ª   +---media
 ª   ª   +---attachments
 ª   ª   ª       855289-hd_1920_1080_25fps.mp4
@@ -153,12 +139,4 @@ This is a secure messaging application built using Django. The app provides **en
 ª       ª       
 ª       +---__pycache__
 ª               admin.cpython-312.pyc
-ª               apps.cpython-312.pyc
-ª               encryptor.cpython-312.pyc
-ª               models.cpython-312.pyc
-ª               msgfuncs.cpython-312.pyc
-ª               spamdetector.cpython-312.pyc
-ª               urls.cpython-312.pyc
-ª               views.cpython-312.pyc
-ª               __init__.cpython-312.pyc
-ª               
+ª  
