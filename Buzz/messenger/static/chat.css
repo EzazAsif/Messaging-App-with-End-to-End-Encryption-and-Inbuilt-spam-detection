@@ -41,8 +41,8 @@ body {
 .optionbox {
   border-radius: 30px;
   position: absolute;
-  top: 115px;
-  left: 310px;
+  top: 15%;
+  left:80%;
   transform: translate(-50%, -50%);
   background-color: white;
   padding: 20px;
