@@ -281,8 +281,9 @@ box-shadow: none;
   margin: 0 !important;
   height: 100px;
   width: 100%;
-  background-color: #00bfa5;
+  background-color: #f0d7aa;
   z-index: 1001;
+  text-shadow: 4px 4px 10px black;
 }
 
 .newMessage-main {
