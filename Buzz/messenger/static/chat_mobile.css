@@ -1,0 +1,93 @@
+/* Add this to your existing CSS file */
+@media (max-width: 700px) {
+    .app {
+        display: flex;
+        flex-direction: column;
+        width: 100%; /* Ensures full width */
+        overflow: hidden; /* Prevent overflow of the app container */
+    }
+  
+    .side {
+        display: none; /* Hide the side section on smaller screens */
+    }
+  
+    .conversation {
+        width: 100%; /* Full width for the conversation area */
+        overflow-y: auto; /* Allow vertical scrolling if content overflows */
+        flex: 1; /* Allow it to grow and take available space */
+        padding: 10px; /* Padding for the conversation area */
+        box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+        background-color: #f9f9f9; /* Light background color for better visibility */
+        border-radius: 5px; /* Rounded corners */
+    }
+  
+    .message {
+        padding: 8px 10px; /* Adjust padding for message containers */
+        margin-bottom: 10px; /* Space between messages */
+        border-radius: 5px; /* Rounded corners for messages */
+    }
+  
+    .message-main-receiver,
+    .message-main-sender {
+        display: flex;
+        justify-content: flex-start; /* Align messages to the left for receiver */
+        width: 100%;
+    }
+  
+    .receiver {
+        background-color: #e0f7fa; /* Light blue background for received messages */
+    }
+  
+    .sender {
+        background-color: #ffe0b2; /* Light orange background for sent messages */
+        align-self: flex-end; /* Align sender messages to the right */
+    }
+  
+    .message-time {
+        font-size: 0.8em; /* Smaller text for message time */
+        color: #777; /* Gray color for timestamps */
+        margin-top: 5px; /* Space above the timestamp */
+    }
+  
+    .reply {
+        display: flex;
+        align-items: center;
+        gap: 10px; /* Adds consistent spacing between elements */
+        height:auto;
+        width: 100%;
+        padding: 10px; /* Padding around the reply box */
+        background-color: #fff; /* White background for the reply area */
+        border-top: 1px solid #ddd; /* Light border above the reply area */
+    }
+  
+    .reply-main {
+        flex: 1; /* Make the textarea take up the remaining space */
+        margin-right: 10px; /* Space between textarea and send button */
+    }
+  
+    #comment {
+        resize: none; /* Disable resizing of the textarea */
+        height: 40px; /* Fixed height for the textarea */
+    }
+  
+    .reply-recording,
+    .reply-send {
+        display: flex;
+        align-items: center; /* Center icons vertically */
+    }
+  
+    .fa-paperclip,
+    .fa-send {
+        font-size: 20px; /* Larger icons for better touch targets */
+    }
+  
+    .profileusername {
+        text-align: center; /* Center username in the profile section */
+        margin-top: 10px; /* Space above the username */
+    }
+  
+    .profileusername h4 {
+        font-family: Lucida Console, Monospace; /* Consistent font for username */
+        font-size: 16px; /* Slightly larger font size */
+    }
+  }
