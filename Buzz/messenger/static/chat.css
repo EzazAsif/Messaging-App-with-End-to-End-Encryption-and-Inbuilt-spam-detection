@@ -508,150 +508,137 @@ box-shadow: none;
   box-shadow: none;
 }
 
-@media screen and (max-width: 700px) {
-  .app {
-    top: 0;
-    height: 100%;
+
+  @media screen and (max-width: 700px) {
+    .app {
+      top: 0;
+      height: 100%;
+      display: flex; /* Use flexbox for layout */
+      flex-direction: column; /* Stack children vertically */
+    }
+  
+    .heading {
+      height: 70px;
+      background-color: #009688;
+      z-index: 10; /* Ensure heading stays above other content */
+    }
+  
+    .fa-2x {
+      font-size: 2.3em !important;
+    }
+  
+    .heading-avatar {
+      padding: 0 !important;
+    }
+  
+    .heading-avatar-icon img {
+      height: 50px;
+      width: 50px;
+    }
+  
+    .heading-compose {
+      padding: 5px !important;
+    }
+  
+    .heading-compose i {
+      color: #fff;
+      cursor: pointer;
+    }
+  
+    .heading-dot {
+      padding: 5px !important;
+      margin-left: 10px !important;
+    }
+  
+    .heading-dot i {
+      color: #fff;
+      cursor: pointer;
+    }
+  
+    .sideBar {
+      display: none; /* Hide the sidebar completely */
+    }
+  
+    .conversation {
+      flex: 1; /* Allow conversation to take up remaining space */
+      padding: 0 !important;
+      margin: 0 !important;
+      border-left: 1px solid rgba(0, 0, 0, 0.08);
+      height: calc(100% - 70px); /* Adjust height to be full minus heading height */
+      overflow-y: auto; /* Allow scrolling if content overflows */
+    }
+  
+    .message {
+      background-color: transparent;
+      height: calc(100% - 140px); /* Adjust as needed */
+    }
+  
+    .reply {
+      height: 70px;
+    }
+  
+    .reply-emojis {
+      padding: 5px 0 !important;
+    }
+  
+    .reply-emojis i {
+      padding: 5px 2px !important;
+      font-size: 1.8em !important;
+    }
+  
+    .reply-main {
+      padding: 2px 8px !important;
+    }
+  
+    .reply-main textarea {
+      padding: 8px !important;
+      font-size: 18px;
+    }
+  
+    .reply-recording {
+      padding: 5px 0 !important;
+    }
+  
+    .reply-recording i {
+      padding: 5px 0 !important;
+      font-size: 1.8em !important;
+    }
+  
+    .reply-send i {
+      font-size: 1.8em !important;
+    }
   }
-  .heading {
-    height: 70px;
-    background-color: #009688;
-  }
-  .fa-2x {
-    font-size: 2.3em !important;
-  }
-  .heading-avatar {
-    padding: 0 !important;
-  }
-  .heading-avatar-icon img {
-    height: 50px;
-    width: 50px;
-  }
-  .heading-compose {
-    padding: 5px !important;
-  }
-  .heading-compose i {
-    color: #fff;
+  
+  /* Spam styles */
+  .spam {
+    position: relative;
     cursor: pointer;
+    padding: 10px; /* Add padding to create space around the content */
   }
-  .heading-dot {
-    padding: 5px !important;
-    margin-left: 10px !important;
+  
+  .spam .message-text {
+    display: none;
   }
-  .heading-dot i {
-    color: #fff;
-    cursor: pointer;
+  
+  .spam::before {
+    content: "Spam";
+    position: absolute; /* Use absolute positioning */
+    top: 5px; /* Adjust to position the label */
+    left: 5px; /* Adjust to position the label */
+    background-color: #ff0000; /* Red background for spam label */
+    color: #ffffff;
+    padding: 2px 6px;
+    border-radius: 3px;
+    font-weight: bold;
+    z-index: 1; /* Ensure it stays above other content */
   }
-  .sideBar {
-    height: calc(100% - 130px);
+  
+  /* When clicked, show message content and hide "Spam" label */
+  .spam.spam-hidden .message-text {
+    display: block;
   }
-  .sideBar-body {
-    height: 80px;
+  
+  .spam.spam-hidden::before {
+    content: ""; /* Hide the Spam label */
   }
-  .sideBar-avatar {
-    text-align: left;
-    padding: 0 8px !important;
-  }
-  .avatar-icon img {
-    height: 55px;
-    width: 55px;
-  }
-  .sideBar-main {
-    padding: 0 !important;
-  }
-  .sideBar-main .row {
-    padding: 0 !important;
-    margin: 0 !important;
-  }
-  .sideBar-name {
-    padding: 10px 5px !important;
-  }
-  .name-meta {
-    font-size: 16px;
-    padding: 5% !important;
-  }
-  .sideBar-time {
-    padding: 10px !important;
-  }
-  .time-meta {
-    text-align: right;
-    font-size: 14px;
-    padding: 4% !important;
-    color: rgba(0, 0, 0, 0.4);
-    vertical-align: baseline;
-  }
-  /*Conversation*/
-  .conversation {
-    padding: 0 !important;
-    margin: 0 !important;
-    height: 100%;
-    /*width: 100%;*/
-    border-left: 1px solid rgba(0, 0, 0, 0.08);
-    /*overflow-y: auto;*/
-  }
-  .message {
-    background-color: transparent;
-    height: calc(100% - 140px);
-  }
-  .reply {
-    height: 70px;
-  }
-  .reply-emojis {
-    padding: 5px 0 !important;
-  }
-  .reply-emojis i {
-    padding: 5px 2px !important;
-    font-size: 1.8em !important;
-  }
-  .reply-main {
-    padding: 2px 8px !important;
-  }
-  .reply-main textarea {
-    padding: 8px !important;
-    font-size: 18px;
-  }
-  .reply-recording {
-    padding: 5px 0 !important;
-  }
-  .reply-recording i {
-    padding: 5px 0 !important;
-    font-size: 1.8em !important;
-  }
-  .reply-send {
-  }
-  .reply-send i {
-    font-size: 1.8em !important;
-  }
-}
-
-.spam {
-  position: relative;
-  cursor: pointer;
-  padding: 10px; /* Add padding to create space around the content */
-}
-
-.spam .message-text {
-  display: none;
-}
-
-.spam::before {
-  content: "Spam";
-  position: absolute; /* Use absolute positioning */
-  top: 5px; /* Adjust to position the label */
-  left: 5px; /* Adjust to position the label */
-  background-color: #ff0000; /* Red background for spam label */
-  color: #ffffff;
-  padding: 2px 6px;
-  border-radius: 3px;
-  font-weight: bold;
-  z-index: 1; /* Ensure it stays above other content */
-}
-
-/* When clicked, show message content and hide "Spam" label */
-.spam.spam-hidden .message-text {
-  display: block;
-}
-
-.spam.spam-hidden::before {
-  content: ""; /* Hide the Spam label */
-}
+  
