@@ -508,106 +508,98 @@ box-shadow: none;
   box-shadow: none;
 }
 
-
-  @media screen and (max-width: 700px) {
-    .app {
-      top: 0;
-      height: 100%;
-      display: flex; /* Use flexbox for layout */
-      flex-direction: column; /* Stack children vertically */
-    }
-  
-    .heading {
-      height: 70px;
-      background-color: #009688;
-      z-index: 10; /* Ensure heading stays above other content */
-    }
-  
-    .fa-2x {
-      font-size: 2.3em !important;
-    }
-  
-    .heading-avatar {
-      padding: 0 !important;
-    }
-  
-    .heading-avatar-icon img {
-      height: 50px;
-      width: 50px;
-    }
-  
-    .heading-compose {
-      padding: 5px !important;
-    }
-  
-    .heading-compose i {
-      color: #fff;
-      cursor: pointer;
-    }
-  
-    .heading-dot {
-      padding: 5px !important;
-      margin-left: 10px !important;
-    }
-  
-    .heading-dot i {
-      color: #fff;
-      cursor: pointer;
-    }
-  
-    .sideBar {
-      display: none; /* Hide the sidebar completely */
-    }
-  
-    .conversation {
-      flex: 1; /* Allow conversation to take up remaining space */
-      padding: 0 !important;
-      margin: 0 !important;
-      border-left: 1px solid rgba(0, 0, 0, 0.08);
-      height: calc(100% - 70px); /* Adjust height to be full minus heading height */
-      overflow-y: auto; /* Allow scrolling if content overflows */
-    }
-  
-    .message {
-      background-color: transparent;
-      height: calc(100% - 140px); /* Adjust as needed */
-    }
-  
-    .reply {
-      height: 70px;
-    }
-  
-    .reply-emojis {
-      padding: 5px 0 !important;
-    }
-  
-    .reply-emojis i {
-      padding: 5px 2px !important;
-      font-size: 1.8em !important;
-    }
-  
-    .reply-main {
-      padding: 2px 8px !important;
-    }
-  
-    .reply-main textarea {
-      padding: 8px !important;
-      font-size: 18px;
-    }
-  
-    .reply-recording {
-      padding: 5px 0 !important;
-    }
-  
-    .reply-recording i {
-      padding: 5px 0 !important;
-      font-size: 1.8em !important;
-    }
-  
-    .reply-send i {
-      font-size: 1.8em !important;
-    }
+/* Add this to your existing CSS file */
+@media (max-width: 700px) {
+  .app {
+      display: flex;
+      flex-direction: column;
+      width: 100%; /* Ensures full width */
+      overflow: hidden; /* Prevent overflow of the app container */
   }
+
+  .side {
+      display: none; /* Hide the side section on smaller screens */
+  }
+
+  .conversation {
+      width: 100%; /* Full width for the conversation area */
+      overflow-y: auto; /* Allow vertical scrolling if content overflows */
+      flex: 1; /* Allow it to grow and take available space */
+      padding: 10px; /* Padding for the conversation area */
+      box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Add a subtle shadow */
+      background-color: #f9f9f9; /* Light background color for better visibility */
+      border-radius: 5px; /* Rounded corners */
+  }
+
+  .message {
+      padding: 8px 10px; /* Adjust padding for message containers */
+      margin-bottom: 10px; /* Space between messages */
+      border-radius: 5px; /* Rounded corners for messages */
+  }
+
+  .message-main-receiver,
+  .message-main-sender {
+      display: flex;
+      justify-content: flex-start; /* Align messages to the left for receiver */
+      width: 100%;
+  }
+
+  .receiver {
+      background-color: #e0f7fa; /* Light blue background for received messages */
+  }
+
+  .sender {
+      background-color: #ffe0b2; /* Light orange background for sent messages */
+      align-self: flex-end; /* Align sender messages to the right */
+  }
+
+  .message-time {
+      font-size: 0.8em; /* Smaller text for message time */
+      color: #777; /* Gray color for timestamps */
+      margin-top: 5px; /* Space above the timestamp */
+  }
+
+  .reply {
+      display: flex;
+      align-items: center;
+      width: 100%;
+      padding: 10px; /* Padding around the reply box */
+      background-color: #fff; /* White background for the reply area */
+      border-top: 1px solid #ddd; /* Light border above the reply area */
+  }
+
+  .reply-main {
+      flex: 1; /* Make the textarea take up the remaining space */
+      margin-right: 10px; /* Space between textarea and send button */
+  }
+
+  #comment {
+      resize: none; /* Disable resizing of the textarea */
+      height: 40px; /* Fixed height for the textarea */
+  }
+
+  .reply-recording,
+  .reply-send {
+      display: flex;
+      align-items: center; /* Center icons vertically */
+  }
+
+  .fa-paperclip,
+  .fa-send {
+      font-size: 20px; /* Larger icons for better touch targets */
+  }
+
+  .profileusername {
+      text-align: center; /* Center username in the profile section */
+      margin-top: 10px; /* Space above the username */
+  }
+
+  .profileusername h4 {
+      font-family: Lucida Console, Monospace; /* Consistent font for username */
+      font-size: 16px; /* Slightly larger font size */
+  }
+}
+
   
   /* Spam styles */
   .spam {
